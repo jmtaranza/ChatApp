@@ -3,7 +3,10 @@ import 'package:chatapp/helper/constants.dart';
 import 'package:chatapp/services/database.dart';
 import 'package:chatapp/widget/widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class Chat extends StatefulWidget {
   final String chatRoomId;
@@ -18,6 +21,22 @@ class Chat extends StatefulWidget {
 class _ChatState extends State<Chat> {
   Stream<QuerySnapshot> chats;
   TextEditingController messageEditingController = new TextEditingController();
+
+  File _image;
+  final picker = ImagePicker();
+  String imageUrl;
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
 
   Widget chatMessages() {
     return StreamBuilder(
@@ -37,6 +56,42 @@ class _ChatState extends State<Chat> {
             : Container();
       },
     );
+  }
+
+  uploadImage() async {
+    final _storage = FirebaseStorage.instance;
+    final _picker = ImagePicker();
+    PickedFile image;
+
+    //Check Permissions
+    await Permission.photos.request();
+
+    var permissionStatus = await Permission.photos.status;
+
+    if (permissionStatus.isGranted) {
+      //Select Image
+      image = await _picker.getImage(source: ImageSource.gallery);
+      var file = File(image.path);
+
+      if (image != null) {
+        //Upload to Firebase
+        var snapshot = await _storage
+            .ref()
+            .child('folderName/imageName')
+            .putFile(file)
+            .onComplete;
+
+        var downloadUrl = await snapshot.ref.getDownloadURL();
+
+        setState(() {
+          imageUrl = downloadUrl;
+        });
+      } else {
+        print('No Path Received');
+      }
+    } else {
+      print('Grant Permissions and try again');
+    }
   }
 
   addMessage() {
@@ -98,6 +153,55 @@ class _ChatState extends State<Chat> {
                     )),
                     SizedBox(
                       width: 16,
+                    ),
+                    /* (imageUrl != null)
+                        ? Image.network(imageUrl)
+                        : Placeholder(
+                            fallbackHeight: 200.0,
+                            fallbackWidth: double.infinity), */
+                    GestureDetector(
+                      onTap: () {
+                        uploadImage();
+                      },
+                      child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  colors: [
+                                    const Color(0x36FFFFFF),
+                                    const Color(0x0FFFFFFF)
+                                  ],
+                                  begin: FractionalOffset.topLeft,
+                                  end: FractionalOffset.bottomRight),
+                              borderRadius: BorderRadius.circular(40)),
+                          padding: EdgeInsets.all(12),
+                          child: Image.network(
+                            "https://www.pngfind.com/pngs/m/66-661092_png-file-upload-image-icon-png-transparent-png.png",
+                            height: 25,
+                            width: 25,
+                          )),
+                    ),
+                    GestureDetector(
+                      onTap: getImage,
+                      child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  colors: [
+                                    const Color(0x36FFFFFF),
+                                    const Color(0x0FFFFFFF)
+                                  ],
+                                  begin: FractionalOffset.topLeft,
+                                  end: FractionalOffset.bottomRight),
+                              borderRadius: BorderRadius.circular(40)),
+                          padding: EdgeInsets.all(12),
+                          child: Image.network(
+                            "https://toppng.com/uploads/preview/add-camera-icon-icon-add-11553485583calilemiyg.png",
+                            height: 25,
+                            width: 25,
+                          )),
                     ),
                     GestureDetector(
                       onTap: () {

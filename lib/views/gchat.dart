@@ -100,6 +100,30 @@ class _ChatState extends State<Gchat> {
                     SizedBox(
                       width: 16,
                     ),
+                    RaisedButton(onPressed: () {}),
+                    GestureDetector(
+                      onTap: () {
+                        addMessage();
+                      },
+                      child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  colors: [
+                                    const Color(0x36FFFFFF),
+                                    const Color(0x0FFFFFFF)
+                                  ],
+                                  begin: FractionalOffset.topLeft,
+                                  end: FractionalOffset.bottomRight),
+                              borderRadius: BorderRadius.circular(40)),
+                          padding: EdgeInsets.all(12),
+                          child: Image.asset(
+                            "assets/images/send.png",
+                            height: 25,
+                            width: 25,
+                          )),
+                    ),
                     GestureDetector(
                       onTap: () {
                         addMessage();
