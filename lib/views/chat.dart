@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:path/path.dart';
 
 class Chat extends StatefulWidget {
   final String chatRoomId;
@@ -21,20 +22,38 @@ class Chat extends StatefulWidget {
 class _ChatState extends State<Chat> {
   Stream<QuerySnapshot> chats;
   TextEditingController messageEditingController = new TextEditingController();
-
-  File _image;
+  File _imageFile;
+  String downloadUrl;
   final picker = ImagePicker();
-  String imageUrl;
 
-  Future getImage() async {
+  Future pickImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
 
     setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
+      _imageFile = File(pickedFile.path);
+    });
+  }
+
+  Future selectImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      _imageFile = File(pickedFile.path);
+    });
+  }
+
+  Future uploadImageToFirebase(BuildContext context) async {
+    String fileName = basename(_imageFile.path);
+    StorageReference firebaseStorageRef =
+        FirebaseStorage.instance.ref().child('uploads/$fileName');
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    taskSnapshot.ref.getDownloadURL().then((value) => print("Done: $value"));
+    downloadUrl = await taskSnapshot.ref.getDownloadURL();
+    print(downloadUrl);
+    addMessage();
+    setState(() {
+      _imageFile = null;
     });
   }
 
@@ -51,6 +70,7 @@ class _ChatState extends State<Chat> {
                     sendByMe: Constants.myName ==
                         snapshot.data.documents[index].data["sendBy"],
                     sendBy: snapshot.data.documents[index].data["sendBy"],
+                    isImage: snapshot.data.documents[index].data["isImage"],
                   );
                 })
             : Container();
@@ -58,48 +78,24 @@ class _ChatState extends State<Chat> {
     );
   }
 
-  uploadImage() async {
-    final _storage = FirebaseStorage.instance;
-    final _picker = ImagePicker();
-    PickedFile image;
-
-    //Check Permissions
-    await Permission.photos.request();
-
-    var permissionStatus = await Permission.photos.status;
-
-    if (permissionStatus.isGranted) {
-      //Select Image
-      image = await _picker.getImage(source: ImageSource.gallery);
-      var file = File(image.path);
-
-      if (image != null) {
-        //Upload to Firebase
-        var snapshot = await _storage
-            .ref()
-            .child('folderName/imageName')
-            .putFile(file)
-            .onComplete;
-
-        var downloadUrl = await snapshot.ref.getDownloadURL();
-
-        setState(() {
-          imageUrl = downloadUrl;
-        });
-      } else {
-        print('No Path Received');
-      }
-    } else {
-      print('Grant Permissions and try again');
-    }
-  }
-
   addMessage() {
-    if (messageEditingController.text.isNotEmpty) {
+    bool isImage = false;
+    String message;
+    print("notnull0");
+    if (messageEditingController.text.isNotEmpty || downloadUrl != null) {
+      print("not null1");
+      if (downloadUrl != null) {
+        message = downloadUrl;
+        isImage = true;
+        print("not null");
+      } else {
+        message = messageEditingController.text;
+      }
       Map<String, dynamic> chatMessageMap = {
         "sendBy": Constants.myName,
-        "message": messageEditingController.text,
+        "message": message,
         'time': DateTime.now().millisecondsSinceEpoch,
+        'isImage': isImage,
       };
 
       DatabaseMethods().addMessage(widget.chatRoomId, chatMessageMap);
@@ -128,110 +124,69 @@ class _ChatState extends State<Chat> {
         centerTitle: true,
       ),
       body: Container(
-        child: Stack(
-          children: [
-            chatMessages(),
-            Container(
-              alignment: Alignment.bottomCenter,
-              width: MediaQuery.of(context).size.width,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-                color: Color(0x54FFFFFF),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: TextField(
-                      controller: messageEditingController,
-                      style: simpleTextStyle(),
-                      decoration: InputDecoration(
-                          hintText: "Message ...",
-                          hintStyle: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                          border: InputBorder.none),
-                    )),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    /* (imageUrl != null)
+        child: Stack(children: [
+          chatMessages(),
+          Container(
+            alignment: Alignment.bottomCenter,
+            width: MediaQuery.of(context).size.width,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              color: Colors.grey.withOpacity(0.5),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: _imageFile != null
+                          ? Image.file(_imageFile)
+                          : TextField(
+                              controller: messageEditingController,
+                              style: simpleTextStyle(),
+                              decoration: InputDecoration(
+                                  hintText: "Message ...",
+                                  hintStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
+                                  border: InputBorder.none),
+                            )),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  /* (imageUrl != null)
                         ? Image.network(imageUrl)
                         : Placeholder(
                             fallbackHeight: 200.0,
                             fallbackWidth: double.infinity), */
-                    GestureDetector(
-                      onTap: () {
-                        uploadImage();
-                      },
-                      child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [
-                                    const Color(0x36FFFFFF),
-                                    const Color(0x0FFFFFFF)
-                                  ],
-                                  begin: FractionalOffset.topLeft,
-                                  end: FractionalOffset.bottomRight),
-                              borderRadius: BorderRadius.circular(40)),
-                          padding: EdgeInsets.all(12),
-                          child: Image.network(
-                            "https://www.pngfind.com/pngs/m/66-661092_png-file-upload-image-icon-png-transparent-png.png",
-                            height: 25,
-                            width: 25,
-                          )),
-                    ),
-                    GestureDetector(
-                      onTap: getImage,
-                      child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [
-                                    const Color(0x36FFFFFF),
-                                    const Color(0x0FFFFFFF)
-                                  ],
-                                  begin: FractionalOffset.topLeft,
-                                  end: FractionalOffset.bottomRight),
-                              borderRadius: BorderRadius.circular(40)),
-                          padding: EdgeInsets.all(12),
-                          child: Image.network(
-                            "https://toppng.com/uploads/preview/add-camera-icon-icon-add-11553485583calilemiyg.png",
-                            height: 25,
-                            width: 25,
-                          )),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        addMessage();
-                      },
-                      child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [
-                                    const Color(0x36FFFFFF),
-                                    const Color(0x0FFFFFFF)
-                                  ],
-                                  begin: FractionalOffset.topLeft,
-                                  end: FractionalOffset.bottomRight),
-                              borderRadius: BorderRadius.circular(40)),
-                          padding: EdgeInsets.all(12),
-                          child: Image.asset(
-                            "assets/images/send.png",
-                            height: 25,
-                            width: 25,
-                          )),
-                    ),
-                  ],
-                ),
+                  GestureDetector(
+                    onTap: pickImage,
+                    child: Icon(Icons.camera_alt),
+                  ),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  GestureDetector(
+                    onTap: selectImage,
+                    child: Icon(Icons.photo_album),
+                  ),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      if (_imageFile != null) {
+                        uploadImageToFirebase(context);
+
+                        print('test');
+                      }
+                      addMessage();
+                      print('test2');
+                    },
+                    child: Icon(Icons.send),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ]),
       ),
     );
   }
@@ -241,9 +196,13 @@ class MessageTile extends StatelessWidget {
   final String message;
   final bool sendByMe;
   final String sendBy;
+  final bool isImage;
 
   MessageTile(
-      {@required this.message, @required this.sendByMe, @required this.sendBy});
+      {@required this.message,
+      @required this.sendByMe,
+      @required this.sendBy,
+      @required this.isImage});
 
   @override
   Widget build(BuildContext context) {
@@ -279,13 +238,15 @@ class MessageTile extends StatelessWidget {
                     fontSize: 16,
                     fontFamily: 'OverpassRegular',
                     fontWeight: FontWeight.w300)),
-            Text(message,
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontFamily: 'OverpassRegular',
-                    fontWeight: FontWeight.w300)),
+            isImage
+                ? Image.network(message)
+                : Text(message,
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'OverpassRegular',
+                        fontWeight: FontWeight.w300)),
           ],
         ),
       ),

@@ -25,8 +25,9 @@ class _SearchState extends State<Group> {
   Map groupMembers = Map();
   DatabaseMethods databaseMethods = new DatabaseMethods();
   TextEditingController searchEditingController = new TextEditingController();
+  TextEditingController groupChatNameController = new TextEditingController();
   QuerySnapshot searchResultSnapshot;
-
+  String addToGC = 'Add To Group Chat';
   bool isLoading = false;
   bool haveUserSearched = false;
 
@@ -43,6 +44,7 @@ class _SearchState extends State<Group> {
         setState(() {
           isLoading = false;
           haveUserSearched = true;
+          addToGC = "Add to Group Chat";
         });
       });
     }
@@ -71,7 +73,7 @@ class _SearchState extends State<Group> {
     }
 
     // String chatRoomId = getChatRoomId(Constants.myName, userName);
-    String chatRoomId = 'Test GC';
+    String chatRoomId = groupChatNameController.text;
 
     Map<String, dynamic> chatRoom = {
       "users": users,
@@ -113,13 +115,16 @@ class _SearchState extends State<Group> {
               groupMembers[groupMembers.length] = userName;
               for (int i = 0; i < groupMembers.length; i++)
                 print(groupMembers[i]);
+              setState(() {
+                addToGC = 'Added';
+              });
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(24)),
               child: Text(
-                "Add to Group Chat",
+                addToGC,
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
@@ -165,10 +170,31 @@ class _SearchState extends State<Group> {
                       children: [
                         Expanded(
                           child: TextField(
+                            controller: groupChatNameController,
+                            style: simpleTextStyle(),
+                            decoration: InputDecoration(
+                                hintText: "Enter Group Name",
+                                hintStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                                border: InputBorder.none),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                    color: Color(0x54FFFFFF),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
                             controller: searchEditingController,
                             style: simpleTextStyle(),
                             decoration: InputDecoration(
-                                hintText: "search username ...",
+                                hintText: "Search username ...",
                                 hintStyle: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
@@ -210,7 +236,9 @@ class _SearchState extends State<Group> {
           FloatingActionButtonLocation.miniCenterFloat,
       floatingActionButton: GestureDetector(
         onTap: () {
-          sendMessage(groupMembers);
+          if (groupMembers.length != 0 &&
+              groupChatNameController.text.isNotEmpty)
+            sendMessage(groupMembers);
         },
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
