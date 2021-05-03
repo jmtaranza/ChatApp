@@ -34,6 +34,14 @@ class _ChatState extends State<Chat> {
     });
   }
 
+  Future selectImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      _imageFile = File(pickedFile.path);
+    });
+  }
+
   Future uploadImageToFirebase(BuildContext context) async {
     String fileName = basename(_imageFile.path);
     StorageReference firebaseStorageRef =
@@ -44,6 +52,9 @@ class _ChatState extends State<Chat> {
     downloadUrl = await taskSnapshot.ref.getDownloadURL();
     print(downloadUrl);
     addMessage();
+    setState(() {
+      _imageFile = null;
+    });
   }
 
   Widget chatMessages() {
@@ -113,115 +124,69 @@ class _ChatState extends State<Chat> {
         centerTitle: true,
       ),
       body: Container(
-        child: Stack(
-          children: [
-            chatMessages(),
-            Container(
-              alignment: Alignment.bottomCenter,
-              width: MediaQuery.of(context).size.width,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-                color: Color(0x54FFFFFF),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: _imageFile != null
-                            ? Image.file(_imageFile)
-                            : TextField(
-                                controller: messageEditingController,
-                                style: simpleTextStyle(),
-                                decoration: InputDecoration(
-                                    hintText: "Message ...",
-                                    hintStyle: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                    ),
-                                    border: InputBorder.none),
-                              )),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    /* (imageUrl != null)
+        child: Stack(children: [
+          chatMessages(),
+          Container(
+            alignment: Alignment.bottomCenter,
+            width: MediaQuery.of(context).size.width,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              color: Colors.grey.withOpacity(0.5),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: _imageFile != null
+                          ? Image.file(_imageFile)
+                          : TextField(
+                              controller: messageEditingController,
+                              style: simpleTextStyle(),
+                              decoration: InputDecoration(
+                                  hintText: "Message ...",
+                                  hintStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
+                                  border: InputBorder.none),
+                            )),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  /* (imageUrl != null)
                         ? Image.network(imageUrl)
                         : Placeholder(
                             fallbackHeight: 200.0,
                             fallbackWidth: double.infinity), */
-                    GestureDetector(
-                      onTap: pickImage,
-                      child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [
-                                    const Color(0x36FFFFFF),
-                                    const Color(0x0FFFFFFF)
-                                  ],
-                                  begin: FractionalOffset.topLeft,
-                                  end: FractionalOffset.bottomRight),
-                              borderRadius: BorderRadius.circular(40)),
-                          padding: EdgeInsets.all(12),
-                          child: Image.network(
-                            "https://www.pngfind.com/pngs/m/66-661092_png-file-upload-image-icon-png-transparent-png.png",
-                            height: 25,
-                            width: 25,
-                          )),
-                    ),
-                    GestureDetector(
-                      child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [
-                                    const Color(0x36FFFFFF),
-                                    const Color(0x0FFFFFFF)
-                                  ],
-                                  begin: FractionalOffset.topLeft,
-                                  end: FractionalOffset.bottomRight),
-                              borderRadius: BorderRadius.circular(40)),
-                          padding: EdgeInsets.all(12),
-                          child: Image.network(
-                            "https://toppng.com/uploads/preview/add-camera-icon-icon-add-11553485583calilemiyg.png",
-                            height: 25,
-                            width: 25,
-                          )),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        if (_imageFile != null) {
-                          uploadImageToFirebase(context);
+                  GestureDetector(
+                    onTap: pickImage,
+                    child: Icon(Icons.camera_alt),
+                  ),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  GestureDetector(
+                    onTap: selectImage,
+                    child: Icon(Icons.photo_album),
+                  ),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      if (_imageFile != null) {
+                        uploadImageToFirebase(context);
 
-                          print('test');
-                        }
-                        addMessage();
-                        print('test2');
-                      },
-                      child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [
-                                    const Color(0x36FFFFFF),
-                                    const Color(0x0FFFFFFF)
-                                  ],
-                                  begin: FractionalOffset.topLeft,
-                                  end: FractionalOffset.bottomRight),
-                              borderRadius: BorderRadius.circular(40)),
-                          padding: EdgeInsets.all(12),
-                          child: Image.asset(
-                            "assets/images/send.png",
-                            height: 25,
-                            width: 25,
-                          )),
-                    ),
-                  ],
-                ),
+                        print('test');
+                      }
+                      addMessage();
+                      print('test2');
+                    },
+                    child: Icon(Icons.send),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ]),
       ),
     );
   }

@@ -35,7 +35,9 @@ class _ChatRoomState extends State<ChatRoom> {
                         snapshot.data.documents[index].data["chatRoomId"],
                   );
                 })
-            : Container();
+            : Container(
+                child: Text('No conversations yet'),
+              );
       },
     );
   }
