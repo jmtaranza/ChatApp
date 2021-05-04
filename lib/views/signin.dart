@@ -74,9 +74,9 @@ class _SignInState extends State<SignIn> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    "assets/images/messagelogo.png",
-                    height: 250,
-                    width: 250,
+                    "assets/images/text.jpg",
+                    height: 200,
+                    width: 200,
                   ),
                   Form(
                     key: formKey,
@@ -142,7 +142,7 @@ class _SignInState extends State<SignIn> {
                       padding: EdgeInsets.symmetric(vertical: 16),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          color: Color(0xFF76FF03)),
+                          color: Color.fromRGBO(67, 204, 71, 8)),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
                         "Sign In",

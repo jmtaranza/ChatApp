@@ -63,7 +63,7 @@ class _ChatRoomState extends State<ChatRoom> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Messenger'),
+        title: Text('Messanger'),
         centerTitle: true,
         leading: GestureDetector(
           onTap: () {
@@ -127,15 +127,15 @@ class ChatRoomsTile extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              height: 50,
-              width: 50,
+              height: 40,
+              width: 40,
               decoration: BoxDecoration(
                   color: Colors.grey, borderRadius: BorderRadius.circular(30)),
               child: Text(userName.substring(0, 1),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 25,
+                      fontSize: 27,
                       fontFamily: 'OverpassRegular',
                       fontWeight: FontWeight.w300)),
             ),
@@ -146,9 +146,8 @@ class ChatRoomsTile extends StatelessWidget {
                 textAlign: TextAlign.start,
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 20,
-                    fontFamily: 'OverpassRegular',
-                    fontWeight: FontWeight.w300))
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500))
           ],
         ),
       ),

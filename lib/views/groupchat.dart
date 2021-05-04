@@ -124,13 +124,8 @@ class _SearchState extends State<Group> {
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(24)),
               child: Text(
-<<<<<<< HEAD
                 addToGC,
                 style: TextStyle(color: Colors.white, fontSize: 16),
-=======
-                "Add to Group Chat",
-                style: TextStyle(color: Colors.black, fontSize: 16),
->>>>>>> jmt
               ),
             ),
           )
@@ -180,7 +175,7 @@ class _SearchState extends State<Group> {
                             decoration: InputDecoration(
                                 hintText: "Enter Group Name",
                                 hintStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 16,
                                 ),
                                 border: InputBorder.none),
@@ -225,7 +220,7 @@ class _SearchState extends State<Group> {
                                   borderRadius: BorderRadius.circular(40)),
                               padding: EdgeInsets.all(12),
                               child: Image.asset(
-                                "assets/images/search_white.png",
+                                "assets/images/search_black.png",
                                 height: 25,
                                 width: 25,
                               )),
@@ -248,10 +243,10 @@ class _SearchState extends State<Group> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
-              color: Colors.blue, borderRadius: BorderRadius.circular(24)),
+              color: Colors.green, borderRadius: BorderRadius.circular(24)),
           child: Text(
             "Create Group Chat",
-            style: TextStyle(color: Colors.black, fontSize: 16),
+            style: TextStyle(color: Colors.white, fontSize: 16),
           ),
         ),
       ),

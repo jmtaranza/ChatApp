@@ -59,6 +59,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       appBar: appBarMain(context),
       body: isLoading
@@ -70,8 +71,13 @@ class _SignUpState extends State<SignUp> {
           : Container(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Spacer(),
+                  Image.asset(
+                    "assets/images/text.jpg",
+                    height: 200,
+                    width: 200,
+                  ),
                   Form(
                     key: formKey,
                     child: Column(
@@ -122,13 +128,9 @@ class _SignUpState extends State<SignUp> {
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 16),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          gradient: LinearGradient(
-                            colors: [
-                              const Color(0xff007EF4),
-                              const Color(0xff2A75BC)
-                            ],
-                          )),
+                        borderRadius: BorderRadius.circular(30),
+                        color: Color.fromRGBO(67, 204, 71, 8),
+                      ),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
                         "Sign Up",
@@ -144,7 +146,7 @@ class _SignUpState extends State<SignUp> {
                     padding: EdgeInsets.symmetric(vertical: 16),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Colors.white),
+                        color: Colors.grey[300]),
                     width: MediaQuery.of(context).size.width,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

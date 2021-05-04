@@ -36,9 +36,9 @@ class _MyAppState extends State<MyApp> {
       title: 'FlutterChat',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.lightGreen[300],
+        primaryColor: Colors.green,
         scaffoldBackgroundColor: Colors.white,
-        accentColor: Color(0xff007EF4),
+        accentColor: Colors.green,
         fontFamily: "OverpassRegular",
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
