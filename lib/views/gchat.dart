@@ -135,6 +135,7 @@ class _ChatState extends State<Gchat> {
                 child: Row(
                   children: [
                     Expanded(
+<<<<<<< HEAD
                         child: _imageFile != null
                             ? Image.file(_imageFile)
                             : TextField(
@@ -148,6 +149,19 @@ class _ChatState extends State<Gchat> {
                                     ),
                                     border: InputBorder.none),
                               )),
+=======
+                        child: TextField(
+                      controller: messageEditingController,
+                      style: simpleTextStyle(),
+                      decoration: InputDecoration(
+                          hintText: "Message ...",
+                          hintStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                          border: InputBorder.none),
+                    )),
+>>>>>>> jmt
                     SizedBox(
                       width: 16,
                     ),
@@ -221,7 +235,7 @@ class MessageTile extends StatelessWidget {
             child: Text(userName.substring(0, 1),
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 16,
                     fontFamily: 'OverpassRegular',
                     fontWeight: FontWeight.w300)),
@@ -249,7 +263,7 @@ class MessageTile extends StatelessWidget {
             child: Text(message,
                 textAlign: TextAlign.start,
                 style: TextStyle(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontSize: 16,
                     fontFamily: 'OverpassRegular',
                     fontWeight: FontWeight.w300)),

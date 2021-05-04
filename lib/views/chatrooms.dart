@@ -63,7 +63,7 @@ class _ChatRoomState extends State<ChatRoom> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Flutter Chat App'),
+        title: Text('Messenger'),
         centerTitle: true,
         leading: GestureDetector(
           onTap: () {
@@ -122,21 +122,20 @@ class ChatRoomsTile extends StatelessWidget {
                     )));
       },
       child: Container(
-        color: Colors.black26,
+        color: Colors.white,
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         child: Row(
           children: [
             Container(
-              height: 30,
-              width: 30,
+              height: 50,
+              width: 50,
               decoration: BoxDecoration(
-                  color: CustomTheme.colorAccent,
-                  borderRadius: BorderRadius.circular(30)),
+                  color: Colors.grey, borderRadius: BorderRadius.circular(30)),
               child: Text(userName.substring(0, 1),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: 25,
                       fontFamily: 'OverpassRegular',
                       fontWeight: FontWeight.w300)),
             ),
@@ -146,8 +145,8 @@ class ChatRoomsTile extends StatelessWidget {
             Text(userName,
                 textAlign: TextAlign.start,
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
+                    color: Colors.black,
+                    fontSize: 20,
                     fontFamily: 'OverpassRegular',
                     fontWeight: FontWeight.w300))
           ],
