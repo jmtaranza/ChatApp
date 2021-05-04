@@ -62,6 +62,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: appBarMain(context),
       body: isLoading
           ? Container(
@@ -70,8 +71,13 @@ class _SignInState extends State<SignIn> {
           : Container(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Spacer(),
+                  Image.asset(
+                    "assets/images/messagelogo.png",
+                    height: 250,
+                    width: 250,
+                  ),
                   Form(
                     key: formKey,
                     child: Column(
@@ -136,12 +142,7 @@ class _SignInState extends State<SignIn> {
                       padding: EdgeInsets.symmetric(vertical: 16),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          gradient: LinearGradient(
-                            colors: [
-                              const Color(0xff007EF4),
-                              const Color(0xff2A75BC)
-                            ],
-                          )),
+                          color: Color(0xFF76FF03)),
                       width: MediaQuery.of(context).size.width,
                       child: Text(
                         "Sign In",
@@ -157,7 +158,7 @@ class _SignInState extends State<SignIn> {
                     padding: EdgeInsets.symmetric(vertical: 16),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Colors.white),
+                        color: Colors.grey[300]),
                     width: MediaQuery.of(context).size.width,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

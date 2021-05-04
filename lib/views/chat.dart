@@ -121,7 +121,7 @@ class _ChatState extends State<Chat> {
               width: MediaQuery.of(context).size.width,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-                color: Color(0x54FFFFFF),
+                color: Colors.grey,
                 child: Row(
                   children: [
                     Expanded(
@@ -133,7 +133,7 @@ class _ChatState extends State<Chat> {
                                 decoration: InputDecoration(
                                     hintText: "Message ...",
                                     hintStyle: TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       fontSize: 16,
                                     ),
                                     border: InputBorder.none),
@@ -149,43 +149,45 @@ class _ChatState extends State<Chat> {
                     GestureDetector(
                       onTap: pickImage,
                       child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [
-                                    const Color(0x36FFFFFF),
-                                    const Color(0x0FFFFFFF)
-                                  ],
-                                  begin: FractionalOffset.topLeft,
-                                  end: FractionalOffset.bottomRight),
-                              borderRadius: BorderRadius.circular(40)),
-                          padding: EdgeInsets.all(12),
-                          child: Image.network(
-                            "https://www.pngfind.com/pngs/m/66-661092_png-file-upload-image-icon-png-transparent-png.png",
-                            height: 25,
-                            width: 25,
-                          )),
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [
+                                  const Color(0x36FFFFFF),
+                                  const Color(0x0FFFFFFF)
+                                ],
+                                begin: FractionalOffset.topLeft,
+                                end: FractionalOffset.bottomRight),
+                            borderRadius: BorderRadius.circular(40)),
+                        padding: EdgeInsets.all(12),
+                        child: Image.asset(
+                          "assets/images/upload.png",
+                          height: 25,
+                          width: 25,
+                        ),
+                      ),
                     ),
                     GestureDetector(
                       child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [
-                                    const Color(0x36FFFFFF),
-                                    const Color(0x0FFFFFFF)
-                                  ],
-                                  begin: FractionalOffset.topLeft,
-                                  end: FractionalOffset.bottomRight),
-                              borderRadius: BorderRadius.circular(40)),
-                          padding: EdgeInsets.all(12),
-                          child: Image.network(
-                            "https://toppng.com/uploads/preview/add-camera-icon-icon-add-11553485583calilemiyg.png",
-                            height: 25,
-                            width: 25,
-                          )),
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [
+                                  const Color(0x36FFFFFF),
+                                  const Color(0x0FFFFFFF)
+                                ],
+                                begin: FractionalOffset.topLeft,
+                                end: FractionalOffset.bottomRight),
+                            borderRadius: BorderRadius.circular(40)),
+                        padding: EdgeInsets.all(12),
+                        child: Image.asset(
+                          "assets/images/camera.png",
+                          height: 25,
+                          width: 25,
+                        ),
+                      ),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -198,23 +200,24 @@ class _ChatState extends State<Chat> {
                         print('test2');
                       },
                       child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: [
-                                    const Color(0x36FFFFFF),
-                                    const Color(0x0FFFFFFF)
-                                  ],
-                                  begin: FractionalOffset.topLeft,
-                                  end: FractionalOffset.bottomRight),
-                              borderRadius: BorderRadius.circular(40)),
-                          padding: EdgeInsets.all(12),
-                          child: Image.asset(
-                            "assets/images/send.png",
-                            height: 25,
-                            width: 25,
-                          )),
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: [
+                                  const Color(0x36FFFFFF),
+                                  const Color(0x0FFFFFFF)
+                                ],
+                                begin: FractionalOffset.topLeft,
+                                end: FractionalOffset.bottomRight),
+                            borderRadius: BorderRadius.circular(40)),
+                        padding: EdgeInsets.all(12),
+                        child: Image.asset(
+                          "assets/images/send.png",
+                          height: 25,
+                          width: 25,
+                        ),
+                      ),
                     ),
                   ],
                 ),

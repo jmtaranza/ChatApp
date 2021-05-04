@@ -99,11 +99,11 @@ class _SearchState extends State<Group> {
             children: [
               Text(
                 userName,
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: Colors.black, fontSize: 16),
               ),
               Text(
                 userEmail,
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: Colors.black, fontSize: 16),
               )
             ],
           ),
@@ -120,7 +120,7 @@ class _SearchState extends State<Group> {
                   color: Colors.blue, borderRadius: BorderRadius.circular(24)),
               child: Text(
                 "Add to Group Chat",
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: Colors.black, fontSize: 16),
               ),
             ),
           )
@@ -170,7 +170,7 @@ class _SearchState extends State<Group> {
                             decoration: InputDecoration(
                                 hintText: "search username ...",
                                 hintStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 16,
                                 ),
                                 border: InputBorder.none),
@@ -218,7 +218,7 @@ class _SearchState extends State<Group> {
               color: Colors.blue, borderRadius: BorderRadius.circular(24)),
           child: Text(
             "Create Group Chat",
-            style: TextStyle(color: Colors.white, fontSize: 16),
+            style: TextStyle(color: Colors.black, fontSize: 16),
           ),
         ),
       ),

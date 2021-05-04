@@ -82,11 +82,11 @@ class _SearchState extends State<Search> {
             children: [
               Text(
                 userName,
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: Colors.black, fontSize: 16),
               ),
               Text(
                 userEmail,
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: Colors.black, fontSize: 16),
               )
             ],
           ),
@@ -101,7 +101,7 @@ class _SearchState extends State<Search> {
                   color: Colors.blue, borderRadius: BorderRadius.circular(24)),
               child: Text(
                 "Message",
-                style: TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: Colors.black, fontSize: 16),
               ),
             ),
           )
@@ -126,7 +126,9 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarMain(context),
+      appBar: AppBar(
+        title: Text('Add participants'),
+      ),
       body: isLoading
           ? Container(
               child: Center(
@@ -148,7 +150,7 @@ class _SearchState extends State<Search> {
                             decoration: InputDecoration(
                                 hintText: "search username ...",
                                 hintStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 16,
                                 ),
                                 border: InputBorder.none),
@@ -172,7 +174,7 @@ class _SearchState extends State<Search> {
                                   borderRadius: BorderRadius.circular(40)),
                               padding: EdgeInsets.all(12),
                               child: Image.asset(
-                                "assets/images/search_white.png",
+                                "assets/images/search_black.png",
                                 height: 25,
                                 width: 25,
                               )),
