@@ -90,7 +90,14 @@ class _SignUpState extends State<SignUp> {
                                 ? "Enter Username 3+ characters"
                                 : null;
                           },
-                          decoration: textFieldInputDecoration("username"),
+                          decoration: InputDecoration(
+                              icon: Icon(Icons.person),
+                              hintText: "Username",
+                              hintStyle: TextStyle(
+                                color: Colors.black.withOpacity(0.5),
+                                fontSize: 16,
+                              ),
+                              border: InputBorder.none),
                         ),
                         TextFormField(
                           controller: emailEditingController,
@@ -102,12 +109,26 @@ class _SignUpState extends State<SignUp> {
                                 ? null
                                 : "Enter correct email";
                           },
-                          decoration: textFieldInputDecoration("email"),
+                          decoration: InputDecoration(
+                              icon: Icon(Icons.email),
+                              hintText: "Email",
+                              hintStyle: TextStyle(
+                                color: Colors.black.withOpacity(0.5),
+                                fontSize: 16,
+                              ),
+                              border: InputBorder.none),
                         ),
                         TextFormField(
                           obscureText: true,
                           style: simpleTextStyle(),
-                          decoration: textFieldInputDecoration("password"),
+                          decoration: InputDecoration(
+                              icon: Icon(Icons.lock),
+                              hintText: "Password",
+                              hintStyle: TextStyle(
+                                color: Colors.black.withOpacity(0.5),
+                                fontSize: 16,
+                              ),
+                              border: InputBorder.none),
                           controller: passwordEditingController,
                           validator: (val) {
                             return val.length < 6

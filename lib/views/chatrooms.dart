@@ -63,7 +63,7 @@ class _ChatRoomState extends State<ChatRoom> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Messanger'),
+        title: Text('TSW Messenger'),
         centerTitle: true,
         leading: GestureDetector(
           onTap: () {

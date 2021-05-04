@@ -127,7 +127,7 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add participants'),
+        title: Text('Start New Conversation'),
       ),
       body: isLoading
           ? Container(
@@ -148,9 +148,9 @@ class _SearchState extends State<Search> {
                             controller: searchEditingController,
                             style: simpleTextStyle(),
                             decoration: InputDecoration(
-                                hintText: "search username ...",
+                                hintText: "Search username ...",
                                 hintStyle: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.black.withOpacity(0.5),
                                   fontSize: 16,
                                 ),
                                 border: InputBorder.none),
@@ -161,23 +161,20 @@ class _SearchState extends State<Search> {
                             initiateSearch();
                           },
                           child: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: [
-                                        const Color(0x36FFFFFF),
-                                        const Color(0x0FFFFFFF)
-                                      ],
-                                      begin: FractionalOffset.topLeft,
-                                      end: FractionalOffset.bottomRight),
-                                  borderRadius: BorderRadius.circular(40)),
-                              padding: EdgeInsets.all(12),
-                              child: Image.asset(
-                                "assets/images/search_black.png",
-                                height: 25,
-                                width: 25,
-                              )),
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                    colors: [
+                                      const Color(0x36FFFFFF),
+                                      const Color(0x0FFFFFFF)
+                                    ],
+                                    begin: FractionalOffset.topLeft,
+                                    end: FractionalOffset.bottomRight),
+                                borderRadius: BorderRadius.circular(40)),
+                            padding: EdgeInsets.all(12),
+                            child: Icon(Icons.search),
+                          ),
                         )
                       ],
                     ),

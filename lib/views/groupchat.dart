@@ -1,7 +1,6 @@
 import 'package:chatapp/helper/constants.dart';
 import 'package:chatapp/services/database.dart';
 import 'package:chatapp/views/chat.dart';
-import 'package:chatapp/views/gchat.dart';
 import 'package:chatapp/widget/widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +29,7 @@ class _SearchState extends State<Group> {
   String addToGC = 'Add To Group Chat';
   bool isLoading = false;
   bool haveUserSearched = false;
+  String errorText;
 
   initiateSearch() async {
     if (searchEditingController.text.isNotEmpty) {
@@ -85,10 +85,41 @@ class _SearchState extends State<Group> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => Gchat(
-                  users: users,
+            builder: (context) => Chat(
+                  userName: chatRoomId,
                   chatRoomId: chatRoomId,
                 )));
+  }
+
+  Widget showAlert() {
+    if (errorText != null)
+      return Container(
+        color: Colors.amberAccent,
+        width: double.infinity,
+        padding: EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Icon(Icons.error_outline),
+            Expanded(
+              child: Text(
+                errorText,
+                maxLines: 3,
+              ),
+            ),
+            IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () {
+                setState(() {
+                  errorText = null;
+                });
+              },
+            )
+          ],
+        ),
+      );
+    else {
+      return Container();
+    }
   }
 
   Widget userTile(String userName, String userEmail) {
@@ -122,7 +153,10 @@ class _SearchState extends State<Group> {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
-                  color: Colors.blue, borderRadius: BorderRadius.circular(24)),
+                  color: addToGC == 'Added'
+                      ? Colors.grey
+                      : Color.fromRGBO(67, 204, 71, 8),
+                  borderRadius: BorderRadius.circular(24)),
               child: Text(
                 addToGC,
                 style: TextStyle(color: Colors.white, fontSize: 16),
@@ -160,8 +194,9 @@ class _SearchState extends State<Group> {
                 child: CircularProgressIndicator(),
               ),
             )
-          : Container(
-              child: Column(
+          : Column(children: [
+              showAlert(),
+              Column(
                 children: [
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -175,7 +210,7 @@ class _SearchState extends State<Group> {
                             decoration: InputDecoration(
                                 hintText: "Enter Group Name",
                                 hintStyle: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.black.withOpacity(0.5),
                                   fontSize: 16,
                                 ),
                                 border: InputBorder.none),
@@ -196,7 +231,7 @@ class _SearchState extends State<Group> {
                             decoration: InputDecoration(
                                 hintText: "Search username ...",
                                 hintStyle: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.black.withOpacity(0.5),
                                   fontSize: 16,
                                 ),
                                 border: InputBorder.none),
@@ -219,11 +254,7 @@ class _SearchState extends State<Group> {
                                       end: FractionalOffset.bottomRight),
                                   borderRadius: BorderRadius.circular(40)),
                               padding: EdgeInsets.all(12),
-                              child: Image.asset(
-                                "assets/images/search_black.png",
-                                height: 25,
-                                width: 25,
-                              )),
+                              child: Icon(Icons.search)),
                         )
                       ],
                     ),
@@ -231,22 +262,40 @@ class _SearchState extends State<Group> {
                   userList(),
                 ],
               ),
-            ),
+            ]),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterFloat,
       floatingActionButton: GestureDetector(
         onTap: () {
-          if (groupMembers.length != 0 &&
-              groupChatNameController.text.isNotEmpty)
+          if (groupMembers.length < 1) {
+            setState(() {
+              errorText = 'You must add atleast 1 member';
+            });
+          } else if (groupChatNameController.text.isEmpty) {
+            setState(() {
+              errorText = 'Group Name must not be empty';
+            });
+          } else {
+            setState(() {
+              errorText = null;
+            });
             sendMessage(groupMembers);
+          }
         },
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
               color: Colors.green, borderRadius: BorderRadius.circular(24)),
-          child: Text(
-            "Create Group Chat",
-            style: TextStyle(color: Colors.white, fontSize: 16),
+          child: FittedBox(
+            child: Row(
+              children: [
+                Icon(Icons.group),
+                Text(
+                  "Create Group Chat",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ],
+            ),
           ),
         ),
       ),

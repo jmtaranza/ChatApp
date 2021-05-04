@@ -3,7 +3,6 @@ import 'package:chatapp/helper/theme.dart';
 import 'package:chatapp/services/auth.dart';
 import 'package:chatapp/services/database.dart';
 import 'package:chatapp/views/chatrooms.dart';
-import 'package:chatapp/views/forgot_password.dart';
 import 'package:chatapp/widget/widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -92,44 +91,35 @@ class _SignInState extends State<SignIn> {
                           },
                           controller: emailEditingController,
                           style: simpleTextStyle(),
-                          decoration: textFieldInputDecoration("email"),
+                          decoration: InputDecoration(
+                              icon: Icon(Icons.email),
+                              hintText: "Email",
+                              hintStyle: TextStyle(
+                                color: Colors.black.withOpacity(0.5),
+                                fontSize: 16,
+                              ),
+                              border: InputBorder.none),
                         ),
                         TextFormField(
                           obscureText: true,
                           validator: (val) {
-                            return val.length > 6
+                            return val.length >= 6
                                 ? null
                                 : "Enter Password 6+ characters";
                           },
                           style: simpleTextStyle(),
                           controller: passwordEditingController,
-                          decoration: textFieldInputDecoration("password"),
+                          decoration: InputDecoration(
+                              icon: Icon(Icons.lock),
+                              hintText: "Password",
+                              hintStyle: TextStyle(
+                                color: Colors.black.withOpacity(0.5),
+                                fontSize: 16,
+                              ),
+                              border: InputBorder.none),
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ForgotPassword()));
-                        },
-                        child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
-                            child: Text(
-                              "Forgot Password?",
-                              style: simpleTextStyle(),
-                            )),
-                      )
-                    ],
                   ),
                   SizedBox(
                     height: 16,
