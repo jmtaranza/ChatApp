@@ -130,8 +130,10 @@ class _ChatState extends State<Chat> {
             alignment: Alignment.bottomCenter,
             width: MediaQuery.of(context).size.width,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-              color: Colors.grey.withOpacity(0.5),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(50)),
               child: Row(
                 children: [
                   Expanded(
@@ -145,7 +147,6 @@ class _ChatState extends State<Chat> {
                                   hintStyle: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
-                                    fontWeight: FontWeight.bold,
                                   ),
                                   border: InputBorder.none),
                             )),

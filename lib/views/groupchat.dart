@@ -289,7 +289,10 @@ class _SearchState extends State<Group> {
           child: FittedBox(
             child: Row(
               children: [
-                Icon(Icons.group),
+                Icon(
+                  Icons.group_add,
+                  color: Colors.white,
+                ),
                 Text(
                   "Create Group Chat",
                   style: TextStyle(color: Colors.white, fontSize: 16),
