@@ -1,9 +1,9 @@
-import 'package:chatapp/helper/helperfunctions.dart';
-import 'package:chatapp/helper/theme.dart';
-import 'package:chatapp/services/auth.dart';
-import 'package:chatapp/services/database.dart';
-import 'package:chatapp/views/chatrooms.dart';
-import 'package:chatapp/widget/widget.dart';
+import 'package:RecipeApp/helper/helperfunctions.dart';
+import 'package:RecipeApp/helper/theme.dart';
+import 'package:RecipeApp/services/auth.dart';
+import 'package:RecipeApp/services/database.dart';
+import 'package:RecipeApp/views/homepage.dart';
+import 'package:RecipeApp/widget/widget.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -50,7 +50,7 @@ class _SignUpState extends State<SignUp> {
               emailEditingController.text);
 
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => ChatRoom()));
+              context, MaterialPageRoute(builder: (context) => Homepage()));
         }
       });
     }
@@ -69,74 +69,91 @@ class _SignUpState extends State<SignUp> {
               ),
             )
           : Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/home.jpg'),
+                      fit: BoxFit.cover)),
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    "assets/images/text.jpg",
-                    height: 200,
-                    width: 200,
+                  Divider(
+                    height: 400,
                   ),
-                  Form(
-                    key: formKey,
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          style: simpleTextStyle(),
-                          controller: usernameEditingController,
-                          validator: (val) {
-                            return val.isEmpty || val.length < 3
-                                ? "Enter Username 3+ characters"
-                                : null;
-                          },
-                          decoration: InputDecoration(
-                              icon: Icon(Icons.person),
-                              hintText: "Username",
-                              hintStyle: TextStyle(
-                                color: Colors.black.withOpacity(0.5),
-                                fontSize: 16,
-                              ),
-                              border: InputBorder.none),
-                        ),
-                        TextFormField(
-                          controller: emailEditingController,
-                          style: simpleTextStyle(),
-                          validator: (val) {
-                            return RegExp(
-                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                    .hasMatch(val)
-                                ? null
-                                : "Enter correct email";
-                          },
-                          decoration: InputDecoration(
-                              icon: Icon(Icons.email),
-                              hintText: "Email",
-                              hintStyle: TextStyle(
-                                color: Colors.black.withOpacity(0.5),
-                                fontSize: 16,
-                              ),
-                              border: InputBorder.none),
-                        ),
-                        TextFormField(
-                          obscureText: true,
-                          style: simpleTextStyle(),
-                          decoration: InputDecoration(
-                              icon: Icon(Icons.lock),
-                              hintText: "Password",
-                              hintStyle: TextStyle(
-                                color: Colors.black.withOpacity(0.5),
-                                fontSize: 16,
-                              ),
-                              border: InputBorder.none),
-                          controller: passwordEditingController,
-                          validator: (val) {
-                            return val.length < 6
-                                ? "Enter Password 6+ characters"
-                                : null;
-                          },
-                        ),
-                      ],
+                  Container(
+                    color: Colors.white70,
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          Divider(
+                            thickness: 2,
+                          ),
+                          TextFormField(
+                            style: simpleTextStyle(),
+                            controller: usernameEditingController,
+                            validator: (val) {
+                              return val.isEmpty || val.length < 3
+                                  ? "Enter Username 3+ characters"
+                                  : null;
+                            },
+                            decoration: InputDecoration(
+                                icon: Icon(Icons.person),
+                                hintText: "Username",
+                                hintStyle: TextStyle(
+                                  color: Colors.black.withOpacity(0.5),
+                                  fontSize: 16,
+                                ),
+                                border: InputBorder.none),
+                          ),
+                          Divider(
+                            thickness: 5,
+                          ),
+                          TextFormField(
+                            controller: emailEditingController,
+                            style: simpleTextStyle(),
+                            validator: (val) {
+                              return RegExp(
+                                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                      .hasMatch(val)
+                                  ? null
+                                  : "Enter correct email";
+                            },
+                            decoration: InputDecoration(
+                                icon: Icon(Icons.email),
+                                hintText: "Email",
+                                hintStyle: TextStyle(
+                                  color: Colors.black.withOpacity(0.5),
+                                  fontSize: 16,
+                                ),
+                                border: InputBorder.none),
+                          ),
+                          Divider(
+                            thickness: 5,
+                          ),
+                          TextFormField(
+                            obscureText: true,
+                            style: simpleTextStyle(),
+                            decoration: InputDecoration(
+                                icon: Icon(Icons.lock),
+                                hintText: "Password",
+                                hintStyle: TextStyle(
+                                  color: Colors.black.withOpacity(0.5),
+                                  fontSize: 16,
+                                ),
+                                border: InputBorder.none),
+                            controller: passwordEditingController,
+                            validator: (val) {
+                              return val.length < 6
+                                  ? "Enter Password 6+ characters"
+                                  : null;
+                            },
+                          ),
+                          Divider(
+                            thickness: 2,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -150,7 +167,7 @@ class _SignUpState extends State<SignUp> {
                       padding: EdgeInsets.symmetric(vertical: 16),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        color: Color.fromRGBO(67, 204, 71, 8),
+                        color: Colors.black,
                       ),
                       width: MediaQuery.of(context).size.width,
                       child: Text(

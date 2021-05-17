@@ -24,7 +24,7 @@ class DatabaseMethods {
         .getDocuments();
   }
 
-  Future<bool> addChatRoom(chatRoom, chatRoomId) {
+  /*  Future<bool> addChatRoom(chatRoom, chatRoomId) {
     Firestore.instance
         .collection("chatRoom")
         .document(chatRoomId)
@@ -32,8 +32,8 @@ class DatabaseMethods {
         .catchError((e) {
       print(e);
     });
-  }
-
+  } */
+/* 
   getChats(String chatRoomId) async {
     return Firestore.instance
         .collection("chatRoom")
@@ -41,9 +41,9 @@ class DatabaseMethods {
         .collection("chats")
         .orderBy('time')
         .snapshots();
-  }
+  } */
 
-  Future<void> addMessage(String chatRoomId, chatMessageData) {
+/*   Future<void> addMessage(String chatRoomId, chatMessageData) {
     Firestore.instance
         .collection("chatRoom")
         .document(chatRoomId)
@@ -52,12 +52,12 @@ class DatabaseMethods {
         .catchError((e) {
       print(e.toString());
     });
-  }
+  } */
 
-  getUserChats(String itIsMyName) async {
+  /* getUserChats(String itIsMyName) async {
     return await Firestore.instance
         .collection("chatRoom")
         .where('users', arrayContains: itIsMyName)
         .snapshots();
-  }
+  } */
 }

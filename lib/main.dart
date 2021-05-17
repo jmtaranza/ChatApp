@@ -1,6 +1,6 @@
-import 'package:chatapp/helper/authenticate.dart';
-import 'package:chatapp/helper/helperfunctions.dart';
-import 'package:chatapp/views/chatrooms.dart';
+import 'package:RecipeApp/helper/authenticate.dart';
+import 'package:RecipeApp/helper/helperfunctions.dart';
+import 'package:RecipeApp/views/homepage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -33,17 +33,17 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'FlutterChat',
+      title: 'RecipeApp',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.green,
+        primaryColor: Colors.black,
         scaffoldBackgroundColor: Colors.white,
-        accentColor: Colors.green,
+        accentColor: Colors.black,
         fontFamily: "OverpassRegular",
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: userIsLoggedIn != null
-          ? userIsLoggedIn ? ChatRoom() : Authenticate()
+          ? userIsLoggedIn ? Homepage() : Authenticate()
           : Container(
               child: Center(
                 child: Authenticate(),

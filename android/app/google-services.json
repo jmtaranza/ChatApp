@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "959534872134",
-    "project_id": "chatapp-b0b42",
-    "storage_bucket": "chatapp-b0b42.appspot.com"
+    "project_number": "960069529953",
+    "project_id": "recipe-app-1b0e7",
+    "storage_bucket": "recipe-app-1b0e7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:959534872134:android:42d50ec5263ff64b8cbc47",
+        "mobilesdk_app_id": "1:960069529953:android:83c9752cb6f938fa3f9520",
         "android_client_info": {
-          "package_name": "com.example.chatapp"
+          "package_name": "com.example.recipeapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "959534872134-22bvkn631b4bc0kooak17ncld70da4eh.apps.googleusercontent.com",
+          "client_id": "960069529953-3mppsoqd4g5lflst8ds586vo37s5ob57.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCaoDsOHge_5csg-mTfmvDDlxiezoR-sdI"
+          "current_key": "AIzaSyCNWduUSvq7UQkra6zxGBqnMyBcvqy11To"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "959534872134-22bvkn631b4bc0kooak17ncld70da4eh.apps.googleusercontent.com",
+              "client_id": "960069529953-3mppsoqd4g5lflst8ds586vo37s5ob57.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "959534872134-cpsmsl98tfqcmajrtfq6p3f0omj0dtbl.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.chatapp"
-              }
             }
           ]
         }
