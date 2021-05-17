@@ -1,5 +1,5 @@
-import 'package:RecipeApp/models/user.dart';
-
+import 'package:chatapp/models/user.dart';
+import 'package:chatapp/views/chat.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -44,7 +44,7 @@ class AuthService {
     }
   }
 
-  /* Future<FirebaseUser> signInWithGoogle(BuildContext context) async {
+  Future<FirebaseUser> signInWithGoogle(BuildContext context) async {
     final GoogleSignIn _googleSignIn = new GoogleSignIn();
 
     final GoogleSignInAccount googleSignInAccount =
@@ -63,7 +63,7 @@ class AuthService {
     } else {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Chat()));
     }
-  } */
+  }
 
   Future signOut() async {
     try {
